@@ -39,30 +39,4 @@ sufficient to merely append it.
 
         Plugins[] = DatabaseConfiguration
 
-Running
----
 
-Environment variables can be supplied in a variety of ways, the instructions here will focus on
-Docker. Docker allows variables to be supplied in a file, like so:
-
-	# Saved as config/envs/local in the Docker repo
-	PIWIK_DATABASE_HOST=docker
-	PIWIK_DATABASE_NAME=piwik
-	PIWIK_DATABASE_USER=piwik
-	PIWIK_DATABASE_PASSWORD=password
-
-We can then launch the Piwik container using something like this (note the use of the `env-file`
-here):
-
-	docker run \
-		-p 127.0.0.1:9999:80 \
-		--add-host=docker:${DOCKER_HOSTIP} \
-		--env-file=config/envs/local \
-		piwik
-
-Notes
----
-
-I have a [Docker Piwik](https://github.com/halfer/piwik-apache-docker) project that
-may be of interest. In fact here I did not use the database plugin, as it was easier
-to move the configuration file to an on-host volume.
