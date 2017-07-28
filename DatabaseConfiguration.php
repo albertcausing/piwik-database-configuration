@@ -17,9 +17,15 @@ class DatabaseConfiguration extends \Piwik\Plugin
 
 	public function getDatabaseConfig(&$dbConfig)
 	{
-		$dbConfig['host'] = getenv('PIWIK_DATABASE_HOST');
-		$dbConfig['dbname'] = getenv('PIWIK_DATABASE_NAME');
-		$dbConfig['username'] = getenv('PIWIK_DATABASE_USER');
-		$dbConfig['password'] = getenv('PIWIK_DATABASE_PASSWORD');
+		if (isset($_SERVER['PRESSFLOW_SETTINGS'])) {
+	  		$env_settings = json_decode($_SERVER['PRESSFLOW_SETTINGS'], TRUE);
+			$db = $env_settings['databases']['default']['default'];
+
+			$dbConfig['host'] = $db['host'];
+			$dbConfig['dbname'] = $db['database'];
+			$dbConfig['username'] = $db['username'];
+			$dbConfig['password'] = $db['password'];
+			$dbConfig['port'] = $db['port'];	
+		}
 	}
 }
